@@ -31,9 +31,7 @@ import com.hbm.entity.mob.EntityHunterChopper;
 import com.hbm.entity.projectile.EntityChopperMine;
 import com.hbm.entity.siege.SiegeTier;
 import com.hbm.flashlight.Flashlight;
-import com.hbm.forgefluid.SpecialContainerFillLists.EnumCanister;
-import com.hbm.forgefluid.SpecialContainerFillLists.EnumCell;
-import com.hbm.forgefluid.SpecialContainerFillLists.EnumGasCanister;
+import com.hbm.forgefluid.HbmFluidContainer;
 import com.hbm.interfaces.IConstantRenderer;
 import com.hbm.interfaces.ICustomSelectionBox;
 import com.hbm.interfaces.IHasCustomModel;
@@ -299,29 +297,13 @@ public class ModEventHandlerClient {
 	@SubscribeEvent
 	public void registerModels(ModelRegistryEvent event) {
 
-		int i = 0;
-		ResourceLocation[] list = new ResourceLocation[EnumCanister.values().length];
-		for(EnumCanister e : EnumCanister.values()) {
-			list[i] = e.getResourceLocation();
-			i++;
+		for(HbmFluidContainer c : HbmFluidContainer.ALL) {
+			List<HbmFluidContainer.Entry> entries = c.getEntries();
+			ResourceLocation[] list = new ResourceLocation[entries.size()];
+			for(int j = 0; j < entries.size(); j++)
+				list[j] = entries.get(j).model;
+			ModelLoader.registerItemVariants(c.getItem(), list);
 		}
-		ModelLoader.registerItemVariants(ModItems.canister_generic, list);
-
-		i = 0;
-		list = new ResourceLocation[EnumCell.values().length];
-		for(EnumCell e : EnumCell.values()) {
-			list[i] = e.getResourceLocation();
-			i++;
-		}
-		ModelLoader.registerItemVariants(ModItems.cell, list);
-
-		i = 0;
-		list = new ResourceLocation[EnumGasCanister.values().length];
-		for(EnumGasCanister e : EnumGasCanister.values()) {
-			list[i] = e.getResourceLocation();
-			i++;
-		}
-		ModelLoader.registerItemVariants(ModItems.cell, list);
 
 		for(Item item : ModItems.ALL_ITEMS) {
 			registerModel(item, 0);
@@ -445,20 +427,12 @@ public class ModEventHandlerClient {
 	@SubscribeEvent
 	public void modelBaking(ModelBakeEvent evt) {
 
-		for(EnumCanister e : EnumCanister.values()) {
-			Object o = evt.getModelRegistry().getObject(e.getResourceLocation());
-			if(o instanceof IBakedModel)
-				e.putRenderModel((IBakedModel) o);
-		}
-		for(EnumCell e : EnumCell.values()) {
-			Object o = evt.getModelRegistry().getObject(e.getResourceLocation());
-			if(o instanceof IBakedModel)
-				e.putRenderModel((IBakedModel) o);
-		}
-		for(EnumGasCanister e : EnumGasCanister.values()) {
-			Object o = evt.getModelRegistry().getObject(e.getResourceLocation());
-			if(o instanceof IBakedModel)
-				e.putRenderModel((IBakedModel) o);
+		for(HbmFluidContainer c : HbmFluidContainer.ALL) {
+			for(HbmFluidContainer.Entry e : c.getEntries()) {
+				Object o = evt.getModelRegistry().getObject(e.model);
+				if(o instanceof IBakedModel)
+					e.putRenderModel((IBakedModel) o);
+			}
 		}
 
 		// Drillgon200: Sigh... find a better custom model loading system.

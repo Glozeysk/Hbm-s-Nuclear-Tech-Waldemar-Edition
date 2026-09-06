@@ -37,6 +37,9 @@ public class HbmFluid {
 	private String flowingTexture;
 	private int color = 0xFFFFFF;
 	private Integer temperature;
+	private Integer density;
+	private Integer viscosity;
+	private Integer luminosity;
 
 	private int poison = 0;
 	private int flammability = 0;
@@ -49,6 +52,8 @@ public class HbmFluid {
 
 	private FuelGrade fuelGrade;
 	private long fuelPower;
+
+	private final Map<HbmFluidContainer, String> containers = new HashMap<HbmFluidContainer, String>();
 
 	private Fluid fluid;
 
@@ -64,6 +69,10 @@ public class HbmFluid {
 	public HbmFluid textures(String still, String flowing) { this.stillTexture = still; this.flowingTexture = flowing; return this; }
 	public HbmFluid color(int rgb) { this.color = rgb; return this; }
 	public HbmFluid temperature(int celsius) { this.temperature = celsius + 273; return this; }
+	public HbmFluid temperatureKelvin(int kelvin) { this.temperature = kelvin; return this; }
+	public HbmFluid density(int d) { this.density = d; return this; }
+	public HbmFluid viscosity(int v) { this.viscosity = v; return this; }
+	public HbmFluid luminosity(int l) { this.luminosity = l; return this; }
 
 	public HbmFluid props(int poison, int flammability, int reactivity, EnumSymbol symbol) {
 		this.poison = poison;
@@ -83,6 +92,11 @@ public class HbmFluid {
 	//engine (diesel/generator) fuel: grade + power; zero power = not a fuel
 	public HbmFluid fuel(FuelGrade grade, long power) { this.fuelGrade = grade; this.fuelPower = power; return this; }
 
+	//container membership: the model name (e.g. "canister_fuel") this fluid uses for that container item
+	public HbmFluid canister(String model) { containers.put(HbmFluidContainer.CANISTER, model); return this; }
+	public HbmFluid cell(String model) { containers.put(HbmFluidContainer.CELL, model); return this; }
+	public HbmFluid gasCanister(String model) { containers.put(HbmFluidContainer.GAS_CANISTER, model); return this; }
+
 	//Creates the Forge fluid (textures/lang by convention unless overridden) and enlists it. Assign the returned
 	//Fluid to the existing ModForgeFluids static field so all current references keep working.
 	public Fluid build() {
@@ -96,8 +110,17 @@ public class HbmFluid {
 
 		if(temperature != null)
 			fluid.setTemperature(temperature);
+		if(density != null)
+			fluid.setDensity(density);
+		if(viscosity != null)
+			fluid.setViscosity(viscosity);
+		if(luminosity != null)
+			fluid.setLuminosity(luminosity);
 		if(translationKey != null)
 			fluid.setUnlocalizedName(translationKey);
+
+		for(Map.Entry<HbmFluidContainer, String> c : containers.entrySet())
+			c.getKey().register(fluid, c.getValue());
 
 		ALL.add(this);
 		return fluid;

@@ -2,7 +2,7 @@ package com.hbm.forgefluid;
 
 import javax.annotation.Nonnull;
 
-import com.hbm.forgefluid.SpecialContainerFillLists.EnumCell;
+import com.hbm.forgefluid.HbmFluidContainer;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -129,7 +129,7 @@ public class HbmFluidHandlerCell implements ICapabilityProvider, IFluidHandlerIt
 
 	public boolean canFillEmpty(FluidStack stack){
 		if(stack != null){
-			return EnumCell.contains(stack.getFluid());
+			return HbmFluidContainer.CELL.contains(stack.getFluid());
 		}
 		return false;
 	}

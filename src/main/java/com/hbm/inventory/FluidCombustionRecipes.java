@@ -13,40 +13,9 @@ public class FluidCombustionRecipes {
 	public static HashMap<Fluid, Integer> resultingTU = new HashMap<Fluid, Integer>();
 	//for 1000 mb
 	public static void registerFluidCombustionRecipes() {
-		addBurnableFluid(ModForgeFluids.hydrogen, 5);
-		addBurnableFluid(ModForgeFluids.deuterium, 5);
-		addBurnableFluid(ModForgeFluids.tritium, 5);
-
+		//oil and ethanol stay manual (kept as manual fluids); everything else via HbmFluid.applyAllFuels
 		addBurnableFluid(ModForgeFluids.oil, 10);
-		addBurnableFluid(ModForgeFluids.hotoil, 10);
-		addBurnableFluid(ModForgeFluids.crackoil, 10);
-		addBurnableFluid(ModForgeFluids.hotcrackoil, 10);
-
-		addBurnableFluid(ModForgeFluids.gas, 10);
-		addBurnableFluid(ModForgeFluids.fishoil, 15);
-		addBurnableFluid(ModForgeFluids.lubricant, 20);
-		addBurnableFluid(ModForgeFluids.aromatics, 25);
-		addBurnableFluid(ModForgeFluids.petroleum, 25);
-		addBurnableFluid(ModForgeFluids.biogas, 25);
-		addBurnableFluid(ModForgeFluids.bitumen, 35);
-		addBurnableFluid(ModForgeFluids.heavyoil, 50);
-		addBurnableFluid(ModForgeFluids.smear, 50);
 		addBurnableFluid(ModForgeFluids.ethanol, 75);
-		addBurnableFluid(ModForgeFluids.reclaimed, 100);
-		addBurnableFluid(ModForgeFluids.petroil, 125);
-		addBurnableFluid(ModForgeFluids.naphtha, 125);
-		addBurnableFluid(ModForgeFluids.biofuel, 150);
-		addBurnableFluid(ModForgeFluids.diesel, 200);
-		addBurnableFluid(ModForgeFluids.lightoil, 200);
-		addBurnableFluid(ModForgeFluids.kerosene, 300);
-		addBurnableFluid(ModForgeFluids.gasoline, 800);
-
-		addBurnableFluid(ModForgeFluids.balefire, 1_000);
-		addBurnableFluid(ModForgeFluids.unsaturateds, 1_000);
-		addBurnableFluid(ModForgeFluids.nitan, 2_000);
-		addBurnableFluid(ModForgeFluids.balefire, 10_000);
-		addBurnableFluid(ModForgeFluids.sparkfuel, 25_000);
-		addBurnableFluid(ModForgeFluids.uu_matter, 50_000);
 
 		addBurnableFluid("liquidhydrogen", 5);
 		addBurnableFluid("liquiddeuterium", 5);

@@ -2,7 +2,7 @@ package com.hbm.forgefluid;
 
 import javax.annotation.Nonnull;
 
-import com.hbm.forgefluid.SpecialContainerFillLists.EnumGasCanister;
+import com.hbm.forgefluid.HbmFluidContainer;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -129,7 +129,7 @@ public class HbmFluidHandlerGasCanister implements ICapabilityProvider, IFluidHa
 
 	public boolean canFillEmpty(FluidStack stack){
 		if(stack != null){
-			return EnumGasCanister.contains(stack.getFluid());
+			return HbmFluidContainer.GAS_CANISTER.contains(stack.getFluid());
 		}
 		return false;
 	}

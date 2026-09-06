@@ -10,9 +10,7 @@ import java.util.Map.Entry;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
 import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.forgefluid.SpecialContainerFillLists.EnumCell;
-import com.hbm.forgefluid.SpecialContainerFillLists.EnumCanister;
-import com.hbm.forgefluid.SpecialContainerFillLists.EnumGasCanister;
+import com.hbm.forgefluid.HbmFluidContainer;
 import com.hbm.inventory.AnvilRecipes;
 import com.hbm.inventory.AnvilRecipes.AnvilConstructionRecipe;
 import com.hbm.inventory.AnvilRecipes.AnvilOutput;
@@ -1090,15 +1088,15 @@ public class JeiRecipes {
 			fluidEquivalences.add(new FluidRecipe(ItemFluidIcon.getStack(f), ItemFluidTank.getFullBarrel(f)));
 			fluidEquivalences.add(new FluidRecipeInverse(ItemFluidIcon.getStack(f), ItemFluidTank.getFullBarrel(f)));
 
-			if(EnumCanister.contains(f)){
+			if(HbmFluidContainer.CANISTER.contains(f)){
 				fluidEquivalences.add(new FluidRecipe(ItemFluidIcon.getStack(f), ItemFluidCanister.getFullCanister(f)));
 				fluidEquivalences.add(new FluidRecipeInverse(ItemFluidIcon.getStack(f), ItemFluidCanister.getFullCanister(f)));
 			}
-			if(EnumGasCanister.contains(f)){
+			if(HbmFluidContainer.GAS_CANISTER.contains(f)){
 				fluidEquivalences.add(new FluidRecipe(ItemFluidIcon.getStack(f), ItemGasCanister.getFullCanister(f)));
 				fluidEquivalences.add(new FluidRecipeInverse(ItemFluidIcon.getStack(f), ItemGasCanister.getFullCanister(f)));
 			}
-			if(EnumCell.contains(f)){
+			if(HbmFluidContainer.CELL.contains(f)){
 				fluidEquivalences.add(new FluidRecipe(ItemFluidIcon.getStack(f), ItemCell.getFullCell(f)));
 				fluidEquivalences.add(new FluidRecipeInverse(ItemFluidIcon.getStack(f), ItemCell.getFullCell(f)));
 			}
