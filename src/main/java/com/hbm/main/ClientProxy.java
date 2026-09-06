@@ -2159,12 +2159,41 @@ public class ClientProxy extends ServerProxy {
 	}
 	
 	@Override
+	public void construct() {
+		//Register the generated-default resource pack during construction, BEFORE the resource reload that bakes models
+		//snapshots the pack list. Doing this in preInit is too late. Plain cube blocks / flat items then need no JSON.
+		//Find defaultResourcePacks by type (only List<IResourcePack> in Minecraft) so we don't depend on the obf field name.
+		try {
+			net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getMinecraft();
+			boolean added = false;
+			for(java.lang.reflect.Field field : net.minecraft.client.Minecraft.class.getDeclaredFields()) {
+				if(!java.util.List.class.isAssignableFrom(field.getType()))
+					continue;
+				field.setAccessible(true);
+				Object val = field.get(mc);
+				if(val instanceof java.util.List) {
+					java.util.List<?> list = (java.util.List<?>) val;
+					if(!list.isEmpty() && list.get(0) instanceof net.minecraft.client.resources.IResourcePack) {
+						((java.util.List<net.minecraft.client.resources.IResourcePack>) val).add(new GeneratedDefaultResourcePack());
+						added = true;
+						break;
+					}
+				}
+			}
+			if(!added)
+				System.err.println("[GenPack] could not locate defaultResourcePacks to register generated defaults");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void preInit(FMLPreInitializationEvent evt){
 		if(SoundSystemConfig.getNumberNormalChannels() < 128){
 			SoundSystemConfig.setNumberNormalChannels(128);
 		}
 		OBJLoader.INSTANCE.addDomain(RefStrings.MODID);
-		
+
 		ItemRenderLibrary.init();
 
         MinecraftForge.EVENT_BUS.register(new HardLandingClientFXHandler());
