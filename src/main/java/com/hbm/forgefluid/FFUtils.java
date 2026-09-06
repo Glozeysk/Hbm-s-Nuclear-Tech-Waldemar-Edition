@@ -1,7 +1,10 @@
 package com.hbm.forgefluid;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 import com.google.common.base.Predicate;
 import com.hbm.interfaces.IFluidPipe;
@@ -407,63 +410,58 @@ public class FFUtils {
 		return false;
 	}
 
+	//The mod's own fixed-capacity fluid item containers all fill/empty with the same logic, differing only in the item,
+	//capacity, empty/full checks, the full-container factory and (for tank->container) a fluid membership gate.
+	private static final class FluidItemContainer {
+		final Item item;
+		final int capacity;
+		final java.util.function.Predicate<ItemStack> isEmpty;   //stack is an empty container of this type
+		final BiPredicate<ItemStack, Fluid> isFull;      //stack is a full container of this fluid
+		final Function<Fluid, ItemStack> makeFull;       //full container for the fluid
+		final java.util.function.Predicate<Fluid> canHold;      //membership gate; tank/barrel accept anything
+
+		FluidItemContainer(Item item, int capacity, java.util.function.Predicate<ItemStack> isEmpty, BiPredicate<ItemStack, Fluid> isFull, Function<Fluid, ItemStack> makeFull, java.util.function.Predicate<Fluid> canHold) {
+			this.item = item;
+			this.capacity = capacity;
+			this.isEmpty = isEmpty;
+			this.isFull = isFull;
+			this.makeFull = makeFull;
+			this.canHold = canHold;
+		}
+	}
+
+	private static List<FluidItemContainer> fluidItemContainers;
+
+	//lazy: ModItems fields must be populated first
+	private static List<FluidItemContainer> fluidItemContainers() {
+		if(fluidItemContainers == null) {
+			fluidItemContainers = Arrays.asList(
+				new FluidItemContainer(ModItems.fluid_tank_full, 1000, ItemFluidTank::isEmptyTank, ItemFluidTank::isFullTank, ItemFluidTank::getFullTank, f -> true),
+				new FluidItemContainer(ModItems.fluid_barrel_full, 16000, ItemFluidTank::isEmptyBarrel, ItemFluidTank::isFullBarrel, ItemFluidTank::getFullBarrel, f -> true),
+				new FluidItemContainer(ModItems.canister_generic, 1000, ItemFluidCanister::isEmptyCanister, ItemFluidCanister::isFullCanister, ItemFluidCanister::getFullCanister, HbmFluidContainer.CANISTER::contains),
+				new FluidItemContainer(ModItems.gas_canister, 4000, ItemGasCanister::isEmptyCanister, ItemGasCanister::isFullCanister, ItemGasCanister::getFullCanister, HbmFluidContainer.GAS_CANISTER::contains),
+				new FluidItemContainer(ModItems.cell, 1000, ItemCell::isEmptyCell, ItemCell::isFullCell, ItemCell::getFullCell, HbmFluidContainer.CELL::contains)
+			);
+		}
+		return fluidItemContainers;
+	}
+
 	private static boolean trySpecialFillFromFluidContainer(IItemHandlerModifiable slots, FluidTank tank, int slot1, int slot2){
 		ItemStack in = slots.getStackInSlot(slot1);
 		ItemStack out = slots.getStackInSlot(slot2);
 
-		if(in.getItem() == ModItems.fluid_tank_full && tank.fill(FluidUtil.getFluidContained(in), false) == 1000 && ((ItemFluidTank.isEmptyTank(out) && out.getCount() < 64) || out.isEmpty())) {
-			tank.fill(FluidUtil.getFluidContained(in), true);
-			in.shrink(1);
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, new ItemStack(ModItems.fluid_tank_full));
-			} else {
-				out.grow(1);
+		for(FluidItemContainer c : fluidItemContainers()) {
+			FluidStack contained = FluidUtil.getFluidContained(in);
+			if(in.getItem() == c.item && contained != null && tank.fill(contained, false) == c.capacity && ((c.isEmpty.test(out) && out.getCount() < 64) || out.isEmpty())) {
+				tank.fill(contained, true);
+				in.shrink(1);
+				if(out.isEmpty()) {
+					slots.setStackInSlot(slot2, new ItemStack(c.item));
+				} else {
+					out.grow(1);
+				}
+				return true;
 			}
-			return true;
-		}
-
-		if(in.getItem() == ModItems.fluid_barrel_full && tank.fill(FluidUtil.getFluidContained(in), false) == 16000 && ((ItemFluidTank.isEmptyBarrel(out) && out.getCount() < 64) || out.isEmpty())) {
-			tank.fill(FluidUtil.getFluidContained(in), true);
-			in.shrink(1);
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, new ItemStack(ModItems.fluid_barrel_full));
-			} else {
-				out.grow(1);
-			}
-			return true;
-		}
-
-		if(in.getItem() == ModItems.canister_generic && tank.fill(FluidUtil.getFluidContained(in), false) == 1000 && ((ItemFluidCanister.isEmptyCanister(out) && out.getCount() < 64) || out.isEmpty())) {
-			tank.fill(FluidUtil.getFluidContained(in), true);
-			in.shrink(1);
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, new ItemStack(ModItems.canister_generic));
-			} else {
-				out.grow(1);
-			}
-			return true;
-		}
-
-		if(in.getItem() == ModItems.gas_canister && tank.fill(FluidUtil.getFluidContained(in), false) == 4000 && ((ItemGasCanister.isEmptyCanister(out) && out.getCount() < 64) || out.isEmpty())) {
-			tank.fill(FluidUtil.getFluidContained(in), true);
-			in.shrink(1);
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, new ItemStack(ModItems.gas_canister));
-			} else {
-				out.grow(1);
-			}
-			return true;
-		}
-
-		if(in.getItem() == ModItems.cell && tank.fill(FluidUtil.getFluidContained(in), false) == 1000 && ((ItemCell.isEmptyCell(out) && out.getCount() < 64) || out.isEmpty())) {
-			tank.fill(FluidUtil.getFluidContained(in), true);
-			in.shrink(1);
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, new ItemStack(ModItems.cell));
-			} else {
-				out.grow(1);
-			}
-			return true;
 		}
 
 		if(in.getItem() == ModItems.nugget_mercury && tank.fill(new FluidStack(ModForgeFluids.mercury, 125), false) == 125){
@@ -762,74 +760,21 @@ public class FFUtils {
 			return true;
 		}
 
-		if(tank.getFluid() != null && in.getItem() == ModItems.fluid_tank_full && tank.drain(1000, false) != null && tank.drain(1000, false).amount == 1000 && ItemFluidTank.isEmptyTank(in1) && ((ItemFluidTank.isFullTank(out, tank.getFluid().getFluid()) && out.getCount() < 64) || out.isEmpty())) {
-			FluidStack f = tank.drain(1000, true);
-			if(f == null)
-				return false;
-			in.shrink(1);
+		for(FluidItemContainer c : fluidItemContainers()) {
+			Fluid tf = tank.getFluid().getFluid();
+			if(in.getItem() == c.item && c.canHold.test(tf) && tank.drain(c.capacity, false) != null && tank.drain(c.capacity, false).amount == c.capacity && c.isEmpty.test(in1) && ((c.isFull.test(out, tf) && out.getCount() < 64) || out.isEmpty())) {
+				FluidStack f = tank.drain(c.capacity, true);
+				if(f == null)
+					return false;
+				in.shrink(1);
 
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, ItemFluidTank.getFullTank(f.getFluid()));
-			} else {
-				out.grow(1);
+				if(out.isEmpty()) {
+					slots.setStackInSlot(slot2, c.makeFull.apply(f.getFluid()));
+				} else {
+					out.grow(1);
+				}
+				return true;
 			}
-			return true;
-		}
-
-		if(tank.getFluid() != null && in.getItem() == ModItems.fluid_barrel_full && tank.drain(16000, false) != null && tank.drain(16000, false).amount == 16000 && ItemFluidTank.isEmptyBarrel(in1) && ((ItemFluidTank.isFullBarrel(out, tank.getFluid().getFluid()) && out.getCount() < 64) || out.isEmpty())) {
-			FluidStack f = tank.drain(16000, true);
-			if(f == null)
-				return false;
-			in.shrink(1);
-
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, ItemFluidTank.getFullBarrel(f.getFluid()));
-			} else {
-				out.grow(1);
-			}
-			return true;
-		}
-
-		if(tank.getFluid() != null && in.getItem() == ModItems.canister_generic && HbmFluidContainer.CANISTER.contains(tank.getFluid().getFluid()) && tank.drain(1000, false) != null && tank.drain(1000, false).amount == 1000 && ItemFluidCanister.isEmptyCanister(in1) && ((ItemFluidCanister.isFullCanister(out, tank.getFluid().getFluid()) && out.getCount() < 64) || out.isEmpty())) {
-			FluidStack f = tank.drain(1000, true);
-			if(f == null)
-				return false;
-			in.shrink(1);
-
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, ItemFluidCanister.getFullCanister(f.getFluid()));
-			} else {
-				out.grow(1);
-			}
-			return true;
-		}
-
-		if(tank.getFluid() != null && in.getItem() == ModItems.gas_canister && HbmFluidContainer.GAS_CANISTER.contains(tank.getFluid().getFluid()) && tank.drain(4000, false) != null && tank.drain(4000, false).amount == 4000 && ItemGasCanister.isEmptyCanister(in1) && ((ItemGasCanister.isFullCanister(out, tank.getFluid().getFluid()) && out.getCount() < 64) || out.isEmpty())) {
-			FluidStack f = tank.drain(4000, true);
-			if(f == null)
-				return false;
-			in.shrink(1);
-
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, ItemGasCanister.getFullCanister(f.getFluid()));
-			} else {
-				out.grow(1);
-			}
-			return true;
-		}
-
-		if(tank.getFluid() != null && in.getItem() == ModItems.cell && HbmFluidContainer.CELL.contains(tank.getFluid().getFluid()) && tank.drain(1000, false) != null && tank.drain(1000, false).amount == 1000 && ItemCell.isEmptyCell(in1) && ((ItemCell.isFullCell(out, tank.getFluid().getFluid()) && out.getCount() < 64) || out.isEmpty())) {
-			FluidStack f = tank.drain(1000, true);
-			if(f == null)
-				return false;
-			in.shrink(1);
-
-			if(out.isEmpty()) {
-				slots.setStackInSlot(slot2, ItemCell.getFullCell(f.getFluid()));
-			} else {
-				out.grow(1);
-			}
-			return true;
 		}
 
 		if(in.getItem() == ModItems.rod_empty) {
