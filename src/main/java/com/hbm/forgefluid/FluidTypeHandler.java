@@ -168,7 +168,6 @@ public class FluidTypeHandler {
 		NO_ID,
 		//valued traits: stored with a number in FluidProperties.traitValues; absent or zero means "not present"
 		COMBUSTION_TU,
-		COMBUSTION_HEAT,
-		RTG_EFFICIENCY;
+		COMBUSTION_HEAT;
 	}
 }
