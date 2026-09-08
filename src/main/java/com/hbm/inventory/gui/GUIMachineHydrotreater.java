@@ -44,9 +44,9 @@ public class GUIMachineHydrotreater extends GuiInfoContainer {
 
 		if(this.mc.player.inventory.getItemStack().isEmpty() && this.isMouseOverSlot(this.inventorySlots.getSlot(9), mouseX, mouseY) && !this.inventorySlots.getSlot(9).getHasStack()) {
 			List<Object[]> lines = new ArrayList<Object[]>();
-			ItemStack screwdriver = new ItemStack(ModItems.screwdriver);
-			lines.add(new Object[] {screwdriver});
-			lines.add(new Object[] {screwdriver.getDisplayName()});
+			ItemStack catalyst_cobalt = new ItemStack(ModItems.catalyst_cobalt);
+			lines.add(new Object[] {catalyst_cobalt});
+			lines.add(new Object[] {catalyst_cobalt.getDisplayName()});
 			this.drawStackText(lines, mouseX, mouseY, this.fontRenderer, 0);
 		}
 
@@ -56,7 +56,8 @@ public class GUIMachineHydrotreater extends GuiInfoContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int i, int j) {
 		String name = this.hydrotreater.hasCustomInventoryName() ? this.hydrotreater.getInventoryName() : I18n.format(this.hydrotreater.getInventoryName());
-		this.fontRenderer.drawString(name, this.xSize / 2 - this.fontRenderer.getStringWidth(name) / 2, 6, 4210752);
+		this.fontRenderer.drawString(name, this.xSize / 2 - this.fontRenderer.getStringWidth(name) / 2, 5, 0xffffff);
+		this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	@Override

@@ -201,7 +201,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeClickArea(GUIMachineGasCent.class, 118, 36, 51, 13, GAS_CENT);
 		registry.addRecipeClickArea(GUIMachineReactor.class, 80, 35, 21, 14, REACTOR);
 		registry.addRecipeClickArea(GUIMachineRefinery.class, 79, 71, 71, 17, REFINERY);
-		registry.addRecipeClickArea(GUIMachineHydrotreater.class, 80, 68, 30, 57, HYDROTREATING);
+		registry.addRecipeClickArea(GUIMachineHydrotreater.class, 85, 82, 24, 24, HYDROTREATING);
 		registry.addRecipeClickArea(GUIMachineShredder.class, 43, 89, 53, 17, SHREDDER);
 		registry.addRecipeClickArea(GUIMachineShreddermk2.class, 80, 35, 21, 14, SHREDDER);
 		registry.addRecipeClickArea(GUICrystallizer.class, 79, 40, 29, 26, CRYSTALLIZER);

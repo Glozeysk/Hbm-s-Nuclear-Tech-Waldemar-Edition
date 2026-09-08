@@ -15,12 +15,12 @@ import net.minecraft.util.ResourceLocation;
 //Reuses the same generic "in -> out" background as CrackingRecipeHandler; no new JEI art needed.
 public class HydrotreatingRecipeHandler implements IRecipeCategory<HydrotreatingRecipe> {
 
-	public static ResourceLocation gui_rl = new ResourceLocation(RefStrings.MODID + ":textures/gui/jei/gui_nei_two.png");
+	public static ResourceLocation gui_rl = new ResourceLocation(RefStrings.MODID + ":textures/gui/jei/gui_nei_two_two.png");
 
 	protected final IDrawable background;
 
 	public HydrotreatingRecipeHandler(IGuiHelper help) {
-		background = help.createDrawable(gui_rl, 43, 34, 133 - 43, 52 - 34);
+		background = help.createDrawable(gui_rl, 34, 34, 133 - 25, 52 - 34);
 	}
 
 	@Override
@@ -52,8 +52,8 @@ public class HydrotreatingRecipeHandler implements IRecipeCategory<Hydrotreating
 		guiItemStacks.init(1, true, 18, 0);
 
 		//product + byproduct on the right, past the arrow
-		guiItemStacks.init(2, false, 54, 0);
-		guiItemStacks.init(3, false, 72, 0);
+		guiItemStacks.init(2, false, 72, 0);
+		guiItemStacks.init(3, false, 90, 0);
 
 		guiItemStacks.set(ingredients);
 	}

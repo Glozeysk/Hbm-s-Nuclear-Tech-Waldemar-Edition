@@ -5,6 +5,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.HydrotreaterRecipes;
 import com.hbm.items.ModItems;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.FluidTankPacket;
@@ -62,6 +63,7 @@ public class TileEntityMachineHydrotreater extends TileEntityMachineBase impleme
 	public void update() {
 		if(!world.isRemote) {
 
+			this.updateConnections();
 			power = Library.chargeTEFromItems(inventory, 0, power, maxPower);
 
 			if(this.inputValidForTank(1))
@@ -95,7 +97,7 @@ public class TileEntityMachineHydrotreater extends TileEntityMachineBase impleme
 			return;
 		if(tanks[1].getFluidAmount() < recipe.getX().amount)
 			return;
-		if(inventory.getStackInSlot(9).isEmpty() || inventory.getStackInSlot(9).getItem() != ModItems.screwdriver)
+		if(inventory.getStackInSlot(9).isEmpty() || inventory.getStackInSlot(9).getItem() != ModItems.catalyst_cobalt)
 			return;
 		if(tanks[2].getFluidAmount() + recipe.getY().amount > tanks[2].getCapacity())
 			return;
@@ -107,6 +109,20 @@ public class TileEntityMachineHydrotreater extends TileEntityMachineBase impleme
 		tanks[2].fill(recipe.getY().copy(), true);
 		tanks[3].fill(recipe.getZ().copy(), true);
 		power -= 20_000;
+	}
+
+	//The 4 dummy ports sit at the diagonal corners of the 3x3 base (pos +-1,0,+-1), each exposing 2 cardinal faces
+	//to open air - that's where a wire physically touches. Direct-adjacent batteries push power without this (hence
+	//"works touching, not through a wire"), but HBM's wire network only routes to tiles that actively subscribe.
+	private void updateConnections() {
+		this.trySubscribe(world, pos.add(2, 0, 1), ForgeDirection.EAST);
+		this.trySubscribe(world, pos.add(1, 0, 2), ForgeDirection.SOUTH);
+		this.trySubscribe(world, pos.add(2, 0, -1), ForgeDirection.EAST);
+		this.trySubscribe(world, pos.add(1, 0, -2), ForgeDirection.NORTH);
+		this.trySubscribe(world, pos.add(-2, 0, 1), ForgeDirection.WEST);
+		this.trySubscribe(world, pos.add(-1, 0, 2), ForgeDirection.SOUTH);
+		this.trySubscribe(world, pos.add(-2, 0, -1), ForgeDirection.WEST);
+		this.trySubscribe(world, pos.add(-1, 0, -2), ForgeDirection.NORTH);
 	}
 
 	private boolean inputValidForTank(int slot) {

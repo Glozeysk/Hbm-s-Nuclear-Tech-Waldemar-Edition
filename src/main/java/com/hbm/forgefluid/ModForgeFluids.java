@@ -275,7 +275,12 @@ public class ModForgeFluids {
 	public static Fluid nitroglycerin = HbmFluid.builder("nitroglycerin")
 			.props(0, 4, 4, EnumSymbol.NONE).dfc(1.5F)
 			.build();
-	
+
+	public static Fluid sourgas = HbmFluid.builder("sourgas")
+			.props(4, 4, 0, EnumSymbol.ACID).trait(FluidTrait.CORROSIVE)
+			.trait(FluidTrait.COMBUSTION_TU, 100)
+			.build();
+
 	public static Fluid liquid_osmiridium = HbmFluid.builder("liquid_osmiridium")
 			.temperatureKelvin(573)
 			.props(5, 0, 5, EnumSymbol.OXIDIZER).dfc(1.8F).trait(FluidTrait.CORROSIVE_2)
@@ -491,6 +496,7 @@ public class ModForgeFluids {
 		aschrab = FluidRegistry.getFluid("aschrab");
 
 		acid = FluidRegistry.getFluid("acid");
+		sourgas = FluidRegistry.getFluid("sourgas");
 		sulfuric_acid = FluidRegistry.getFluid("sulfuric_acid");
 		nitric_acid = FluidRegistry.getFluid("nitric_acid");
 		solvent = FluidRegistry.getFluid("solvent");

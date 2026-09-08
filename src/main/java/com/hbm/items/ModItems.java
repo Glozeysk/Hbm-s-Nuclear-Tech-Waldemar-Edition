@@ -1700,6 +1700,7 @@ public class ModItems {
 	public static final Item toothpicks = new ItemBase("toothpicks").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ducttape = new ItemBase("ducttape").setCreativeTab(MainRegistry.partsTab);
 	public static final Item catalyst_clay = new ItemBase("catalyst_clay").setCreativeTab(MainRegistry.partsTab);
+	public static final Item catalyst_cobalt = new ItemBase("catalyst_cobalt").setCreativeTab(MainRegistry.partsTab);
 	public static final Item motor = new ItemBase("motor").setCreativeTab(MainRegistry.partsTab);
 	public static final Item motor_desh = new ItemBase("motor_desh").setCreativeTab(MainRegistry.partsTab);
 	public static final Item photo_panel = new ItemBase("photo_panel").setCreativeTab(MainRegistry.partsTab);
