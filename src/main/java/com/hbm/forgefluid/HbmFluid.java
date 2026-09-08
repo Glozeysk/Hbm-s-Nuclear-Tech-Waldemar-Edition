@@ -14,6 +14,7 @@ import com.hbm.inventory.FluidCombustionRecipes;
 import com.hbm.lib.RefStrings;
 import com.hbm.render.misc.EnumSymbol;
 
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -142,6 +143,14 @@ public class HbmFluid {
 					f.flags.toArray(new FluidTrait[0]));
 			p.traitValues.putAll(f.values);
 			FluidTypeHandler.registerProperties(f.fluid.getName(), p);
+		}
+	}
+
+	//still/flowing icons for every builder fluid, so a new fluid never needs a manual registerSprite call
+	public static void registerAllSprites(TextureMap map) {
+		for(HbmFluid f : ALL) {
+			map.registerSprite(f.fluid.getStill());
+			map.registerSprite(f.fluid.getFlowing());
 		}
 	}
 
