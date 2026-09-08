@@ -2049,6 +2049,45 @@ public class ModEventHandlerClient {
 			if(stack.getTagCompound().getBoolean("ntmContagion"))
 				list.add("§4§l[" + I18nUtil.resolveKey("trait.mkuinfected") + "§4§l]");
 		}
+
+		/// SEARCHABLE MACHINE TAGS (JEI tooltip search picks these up too) ///
+		if(stack.getItem() == ModItems.fluid_icon) {
+			list.add(TextFormatting.AQUA + "< " + I18nUtil.resolveKey("trait.machineFluid") + " >");
+		} else if(stack.getItem().getRegistryName() != null) {
+			switch(stack.getItem().getRegistryName().getPath()) {
+				// every block whose TE implements api.hbm.energy.IEnergyGenerator (produces power, never just receives it)
+				case "machine_turbine":
+				case "machine_large_turbine":
+				case "machine_turbofan":
+				case "machine_rtg_grey":
+				case "machine_minirtg":
+				case "rtg_polonium":
+				case "machine_diesel":
+				case "machine_spp_bottom":
+				case "watz_core":
+				case "machine_industrial_generator":
+				case "machine_amgen":
+				case "machine_geo":
+				case "machine_selenium":
+				case "machine_radgen":
+				case "machine_coal_on":
+				case "machine_coal_off":
+				case "machine_flare":
+				case "dfc_receiver":
+				case "machine_chungus":
+				case "machine_converter_rf_he":
+				case "fwatz_core":
+					list.add(TextFormatting.AQUA + "< " + I18nUtil.resolveKey("trait.machineGenerator") + " >");
+					break;
+				case "canister_fuel":
+				case "gas_empty":
+				case "cell":
+				case "fluid_tank_full":
+				case "fluid_barrel_full":
+					list.add(TextFormatting.AQUA + "< " + I18nUtil.resolveKey("trait.machineFluid") + " >");
+					break;
+			}
+		}
 	}
 	
 	private static final ResourceLocation poster = new ResourceLocation(RefStrings.MODID + ":textures/models/misc/poster.png");

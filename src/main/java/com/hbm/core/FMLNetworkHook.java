@@ -158,6 +158,9 @@ public final class FMLNetworkHook {
                             throw new RuntimeException(e);
                         }
                     });
+                    // flush each part immediately instead of letting up to 255 parts (~255MB) pile up
+                    // in the Netty outbound buffer until some later, unrelated flush
+                    ctx.flush();
                 }
             }
         } finally {
