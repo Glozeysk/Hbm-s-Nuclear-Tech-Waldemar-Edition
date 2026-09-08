@@ -34,6 +34,7 @@ import com.hbm.inventory.MachineRecipes.GasCentOutput;
 import com.hbm.inventory.MagicRecipes;
 import com.hbm.inventory.RefineryRecipes;
 import com.hbm.inventory.CrackRecipes;
+import com.hbm.inventory.HydrotreaterRecipes;
 import com.hbm.inventory.NuclearTransmutationRecipes;
 import com.hbm.inventory.MagicRecipes.MagicRecipe;
 import com.hbm.inventory.RecipesCommon.AStack;
@@ -54,6 +55,7 @@ import com.hbm.main.MainRegistry;
 import com.hbm.util.WeightedRandomObject;
 import com.hbm.util.Tuple.Quartet;
 import com.hbm.util.Tuple.Pair;
+import com.hbm.util.Tuple.Triplet;
 import com.hbm.util.I18nUtil;
 
 import mezz.jei.api.gui.IDrawableStatic;
@@ -89,6 +91,7 @@ public class JeiRecipes {
 	private static List<RBMKFuelRecipe> rbmkFuelRecipes = null;
 	private static List<RefineryRecipe> refineryRecipes = null;
 	private static List<CrackingRecipe> crackingRecipes = null;
+	private static List<HydrotreatingRecipe> hydrotreatingRecipes = null;
 	private static List<FractioningRecipe> fractioningRecipes = null;
 	private static List<FluidRecipe> fluidEquivalences = null;
 	private static List<BookRecipe> bookRecipes = null;
@@ -420,6 +423,24 @@ public class JeiRecipes {
 		@Override
 		public void getIngredients(IIngredients ingredients) {
 			ingredients.setInput(VanillaTypes.ITEM, input);
+			ingredients.setOutputs(VanillaTypes.ITEM, outputs);
+		}
+
+	}
+
+	public static class HydrotreatingRecipe implements IRecipeWrapper {
+
+		private final List<ItemStack> inputs;
+		private final List<ItemStack> outputs;
+
+		public HydrotreatingRecipe(List<ItemStack> inputs, List<ItemStack> outputs) {
+			this.inputs = inputs;
+			this.outputs = outputs;
+		}
+
+		@Override
+		public void getIngredients(IIngredients ingredients) {
+			ingredients.setInputs(VanillaTypes.ITEM, inputs);
 			ingredients.setOutputs(VanillaTypes.ITEM, outputs);
 		}
 
@@ -1038,6 +1059,28 @@ public class JeiRecipes {
 			);
 		}
 		return crackingRecipes;
+	}
+
+	public static List<HydrotreatingRecipe> getHydrotreatingRecipe() {
+		if(hydrotreatingRecipes != null)
+			return hydrotreatingRecipes;
+		hydrotreatingRecipes = new ArrayList<HydrotreatingRecipe>();
+
+		for(Fluid fluid : HydrotreaterRecipes.recipes.keySet()){
+			Triplet<FluidStack, FluidStack, FluidStack> recipe = HydrotreaterRecipes.getRecipe(fluid);
+			hydrotreatingRecipes.add(new HydrotreatingRecipe(
+					Arrays.asList(
+						ItemFluidIcon.getStackWithQuantity(fluid, 1000),
+						ItemFluidIcon.getStackWithQuantity(recipe.getX().getFluid(), recipe.getX().amount * 10)
+					),
+					Arrays.asList(
+						ItemFluidIcon.getStackWithQuantity(recipe.getY().getFluid(), recipe.getY().amount * 10),
+						ItemFluidIcon.getStackWithQuantity(recipe.getZ().getFluid(), recipe.getZ().amount * 10)
+					)
+				)
+			);
+		}
+		return hydrotreatingRecipes;
 	}
 
 	public static List<FractioningRecipe> getFractioningRecipe() {
