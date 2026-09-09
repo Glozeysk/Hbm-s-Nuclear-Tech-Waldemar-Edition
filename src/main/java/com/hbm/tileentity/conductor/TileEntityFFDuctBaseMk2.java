@@ -73,22 +73,48 @@ public class TileEntityFFDuctBaseMk2 extends TileEntity implements IFluidPipeMk2
 
 	public void setType(Fluid f) {
 		if (f != type) {
-			type = f;
+			setTypeSilent(f);
 			world.notifyNeighborsOfStateChange(pos, getBlockType(), true);
 			world.neighborChanged(pos, getBlockType(), pos);
-			IBlockState state = world.getBlockState(pos);
-			world.markAndNotifyBlock(pos, world.getChunk(pos), state, state, 2);
 			rebuildNetworks(world, pos);
-			if (world instanceof WorldServer) {
-				PlayerChunkMapEntry entry = ((WorldServer) world).getPlayerChunkMap().getEntry(MathHelper.floor(pos.getX()) >> 4, MathHelper.floor(pos.getZ()) >> 4);
-				if (entry != null) {
-					for (EntityPlayerMP player : entry.getWatchingPlayers()) {
-						player.connection.sendPacket(new SPacketUpdateTileEntity(pos, 0, writeToNBT(new NBTTagCompound())));
-					}
-				}
-			}
+			syncToWatchers();
 			if (!world.isRemote)
 				PacketDispatcher.wrapper.sendToAllTracking(new PipeUpdatePacket(pos, 1), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
+		}
+	}
+
+	/**
+	 * Sets the fluid type without notifying neighbors, rebuilding the network, or syncing to
+	 * clients - those are the caller's responsibility. Used by bulk operations (the fluid
+	 * identifier's flood-fill) that batch these steps once for a whole region instead of once
+	 * per pipe, to avoid a packet storm and repeated full network rebuilds.
+	 */
+	public void setTypeSilent(Fluid f) {
+		type = f;
+		markDirty();
+	}
+
+	/** Recomputes the tileentity cache and connection mask without sending a PipeUpdatePacket. */
+	public void refreshLocalState() {
+		rebuildCache();
+		updateConnections();
+	}
+
+	/**
+	 * Syncs the current NBT state (incl. fluid type) to watching players and triggers a
+	 * blockstate resync so clients rerender connections. Does not touch the network - call
+	 * rebuildNetworks separately.
+	 */
+	public void syncToWatchers() {
+		IBlockState state = world.getBlockState(pos);
+		world.markAndNotifyBlock(pos, world.getChunk(pos), state, state, 2);
+		if (world instanceof WorldServer) {
+			PlayerChunkMapEntry entry = ((WorldServer) world).getPlayerChunkMap().getEntry(MathHelper.floor(pos.getX()) >> 4, MathHelper.floor(pos.getZ()) >> 4);
+			if (entry != null) {
+				for (EntityPlayerMP player : entry.getWatchingPlayers()) {
+					player.connection.sendPacket(new SPacketUpdateTileEntity(pos, 0, writeToNBT(new NBTTagCompound())));
+				}
+			}
 		}
 	}
 
