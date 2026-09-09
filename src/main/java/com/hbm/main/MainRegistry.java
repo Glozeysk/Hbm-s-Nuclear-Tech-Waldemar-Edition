@@ -2,7 +2,6 @@ package com.hbm.main;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -257,6 +256,7 @@ import com.hbm.inventory.control_panel.ControlEvent;
 import com.hbm.inventory.control_panel.ControlRegistry;
 import com.hbm.items.ModItems;
 import com.hbm.items.armor.ItemModLens;
+import com.hbm.lib.internal.UnsafeHolder;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.HbmWorld;
 import com.hbm.lib.Library;
@@ -544,11 +544,11 @@ public class MainRegistry {
 			try{
 				@SuppressWarnings("deprecation")
 				Field f = ReflectionHelper.findField(RangedAttribute.class, "maximumValue", "field_111118_b");
-				Field modifiersField = Field.class.getDeclaredField("modifiers");
-				modifiersField.setAccessible(true);
-				modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-				f.set(SharedMonsterAttributes.MAX_HEALTH, Integer.MAX_VALUE);
-			} catch(Throwable e){}
+				long offset = UnsafeHolder.U.objectFieldOffset(f);
+				UnsafeHolder.U.putDouble(SharedMonsterAttributes.MAX_HEALTH, offset, Integer.MAX_VALUE);
+			} catch(Throwable e){
+				logger.warn("Failed to raise vanilla MAX_HEALTH cap", e);
+			}
 		}
 		proxy.checkGLCaps();
 		reloadConfig();
