@@ -1071,11 +1071,11 @@ public class JeiRecipes {
 			hydrotreatingRecipes.add(new HydrotreatingRecipe(
 					Arrays.asList(
 						ItemFluidIcon.getStackWithQuantity(fluid, 1000),
-						ItemFluidIcon.getStackWithQuantity(recipe.getX().getFluid(), recipe.getX().amount * 10)
+						ItemFluidIcon.getStackWithQuantity(recipe.getX().getFluid(), recipe.getX().amount)
 					),
 					Arrays.asList(
-						ItemFluidIcon.getStackWithQuantity(recipe.getY().getFluid(), recipe.getY().amount * 10),
-						ItemFluidIcon.getStackWithQuantity(recipe.getZ().getFluid(), recipe.getZ().amount * 10)
+						ItemFluidIcon.getStackWithQuantity(recipe.getY().getFluid(), recipe.getY().amount),
+						ItemFluidIcon.getStackWithQuantity(recipe.getZ().getFluid(), recipe.getZ().amount)
 					)
 				)
 			);

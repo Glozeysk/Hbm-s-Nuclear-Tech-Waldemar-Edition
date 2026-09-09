@@ -89,12 +89,20 @@ public class ModForgeFluids {
 			.props(2, 1, 0, EnumSymbol.NONE)
 			.trait(FluidTrait.COMBUSTION_TU, 10)
 			.build();
+	public static Fluid crackoil_pure = HbmFluid.builder("crackoil_pure")
+			.props(2, 1, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 20)
+			.build();
 	public static Fluid hotcrackoil = HbmFluid.builder("hotcrackoil")
 			.temperature(350)
 			.props(2, 3, 0, EnumSymbol.NONE)
 			.trait(FluidTrait.COMBUSTION_TU, 10)
 			.build();
-
+	public static Fluid hotcrackoil_pure = HbmFluid.builder("hotcrackoil_pure")
+			.temperature(350)
+			.props(2, 3, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 20)
+			.build();
 	public static Fluid heavyoil = HbmFluid.builder("heavyoil")
 			.props(2, 1, 0, EnumSymbol.NONE)
 			.trait(FluidTrait.COMBUSTION_TU, 50)
@@ -142,13 +150,16 @@ public class ModForgeFluids {
 			.canister("canister_canola")
 			.build();
 
-	//Yes yes I know, I spelled 'naphtha' wrong.
 	public static Fluid naphtha = HbmFluid.builder("naphtha")
-			.textures("blocks/forgefluid/napatha_still", "blocks/forgefluid/napatha_flowing")
 			.props(2, 1, 0, EnumSymbol.NONE)
 			.trait(FluidTrait.COMBUSTION_TU, 125)
 			.fuel(FuelGrade.MEDIUM, 200_000)
 			.canister("canister_naphtha")
+			.build();
+	public static Fluid naphtha_pure = HbmFluid.builder("naphtha_pure")
+			.props(2, 1, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 250)
+			.fuel(FuelGrade.MEDIUM, 400_000)
 			.build();
 	public static Fluid diesel = HbmFluid.builder("diesel")
 			.props(1, 2, 0, EnumSymbol.NONE)
@@ -162,6 +173,11 @@ public class ModForgeFluids {
 			.trait(FluidTrait.COMBUSTION_TU, 200)
 			.fuel(FuelGrade.MEDIUM, 500_000)
 			.canister("canister_lightoil")
+			.build();
+	public static Fluid lightoil_pure = HbmFluid.builder("lightoil_pure")
+			.props(1, 2, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 400)
+			.fuel(FuelGrade.MEDIUM, 1_000_000)
 			.build();
 	public static Fluid kerosene = HbmFluid.builder("kerosene")
 			.props(1, 2, 0, EnumSymbol.NONE)

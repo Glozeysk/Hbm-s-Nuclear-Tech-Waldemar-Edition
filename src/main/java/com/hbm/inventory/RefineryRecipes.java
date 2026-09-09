@@ -43,12 +43,12 @@ public class RefineryRecipes {
 			new FluidStack(ModForgeFluids.unsaturateds, 15)	}, 
 			new ItemStack(ModItems.oil_tar, 1)));
 
-		refineryRecipesMap.put(ModForgeFluids.toxic_fluid, new Pair(new FluidStack[]{ 
-			new FluidStack(ModForgeFluids.wastefluid, 50),
-			new FluidStack(ModForgeFluids.wastegas, 40),
-			new FluidStack(ModForgeFluids.corium_fluid, 4), 
-			new FluidStack(ModForgeFluids.watz, 1)}, 
-			new ItemStack(ModItems.nuclear_waste_tiny, 1)));
+		refineryRecipesMap.put(ModForgeFluids.hotcrackoil_pure, new Pair(new FluidStack[]{ 
+			new FluidStack(ModForgeFluids.naphtha_pure, 40), 
+			new FluidStack(ModForgeFluids.lightoil_pure, 30),
+			new FluidStack(ModForgeFluids.aromatics, 15),
+			new FluidStack(ModForgeFluids.unsaturateds, 15)	}, 
+			new ItemStack(ModItems.oil_tar, 1)));
 	}
 
 	public static Pair<FluidStack[], ItemStack> getRecipe(Fluid f){

@@ -35,6 +35,7 @@ public class HeatRecipes {
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.superhotsteam, 10), new FluidStack(ModForgeFluids.ultrahotsteam, 1), 120);
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.oil, 1), new FluidStack(ModForgeFluids.hotoil, 1), 300);
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.crackoil, 1), new FluidStack(ModForgeFluids.hotcrackoil, 1), 300);
+		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.crackoil_pure, 1), new FluidStack(ModForgeFluids.hotcrackoil_pure, 1), 300);
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.coolant, 1), new FluidStack(ModForgeFluids.hotcoolant, 1), 500);
 
 		//Compat

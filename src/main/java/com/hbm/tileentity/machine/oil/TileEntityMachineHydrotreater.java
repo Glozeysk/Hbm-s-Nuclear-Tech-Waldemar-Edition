@@ -33,9 +33,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-//Ported from NTM:CE (Warfactory-Official/Hbm-s-Nuclear-Tech-CE): TileEntityMachineHydrotreater, adapted to this
-//fork's Forge fluid system (no FluidTankNTM/pressure) and its own recipe list (HydrotreaterRecipes).
-//Catalyst slot substitutes CE's catalytic_converter item with a screwdriver, per project decision.
 public class TileEntityMachineHydrotreater extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 
 	public static final long maxPower = 1_000_000;
@@ -49,10 +46,10 @@ public class TileEntityMachineHydrotreater extends TileEntityMachineBase impleme
 		tanks = new FluidTank[4];
 		tankTypes = new Fluid[] {null, ModForgeFluids.hydrogen, null, null};
 
-		tanks[0] = new FluidTank(64000); //feedstock in
-		tanks[1] = new FluidTank(ModForgeFluids.hydrogen, 0, 64000); //hydrogen in
-		tanks[2] = new FluidTank(24000); //product out
-		tanks[3] = new FluidTank(24000); //byproduct out
+		tanks[0] = new FluidTank(64000);
+		tanks[1] = new FluidTank(ModForgeFluids.hydrogen, 0, 64000);
+		tanks[2] = new FluidTank(24000);
+		tanks[3] = new FluidTank(ModForgeFluids.sourgas, 0, 24000);
 	}
 
 	public String getName() {
@@ -91,6 +88,10 @@ public class TileEntityMachineHydrotreater extends TileEntityMachineBase impleme
 		setTankType(2, recipe.getY().getFluid());
 		setTankType(3, recipe.getZ().getFluid());
 
+		// don't run onto a leftover product of another recipe, it would be converted in place
+		if(outputBlocked(2, recipe.getY()) || outputBlocked(3, recipe.getZ()))
+			return;
+
 		if(power < 20_000)
 			return;
 		if(tanks[0].getFluidAmount() < 1000)
@@ -111,9 +112,10 @@ public class TileEntityMachineHydrotreater extends TileEntityMachineBase impleme
 		power -= 20_000;
 	}
 
-	//The 4 dummy ports sit at the diagonal corners of the 3x3 base (pos +-1,0,+-1), each exposing 2 cardinal faces
-	//to open air - that's where a wire physically touches. Direct-adjacent batteries push power without this (hence
-	//"works touching, not through a wire"), but HBM's wire network only routes to tiles that actively subscribe.
+	private boolean outputBlocked(int idx, FluidStack out) {
+		return tanks[idx].getFluidAmount() > 0 && tanks[idx].getFluid().getFluid() != out.getFluid();
+	}
+
 	private void updateConnections() {
 		this.trySubscribe(world, pos.add(2, 0, 1), ForgeDirection.EAST);
 		this.trySubscribe(world, pos.add(1, 0, 2), ForgeDirection.SOUTH);
@@ -129,6 +131,8 @@ public class TileEntityMachineHydrotreater extends TileEntityMachineBase impleme
 		if(!inventory.getStackInSlot(slot).isEmpty()) {
 			FluidStack containerFluid = FluidUtil.getFluidContained(inventory.getStackInSlot(slot));
 			if(containerFluid != null && HydrotreaterRecipes.getRecipe(containerFluid.getFluid()) != null) {
+				if(tanks[0].getFluidAmount() > 0 && tanks[0].getFluid().getFluid() != containerFluid.getFluid())
+					return false;
 				tankTypes[0] = containerFluid.getFluid();
 				return true;
 			}
@@ -137,6 +141,8 @@ public class TileEntityMachineHydrotreater extends TileEntityMachineBase impleme
 	}
 
 	public void setTankType(int idx, Fluid type) {
+		if(tanks[idx].getFluidAmount() > 0)
+			return;
 		if(tankTypes[idx] != type) {
 			tankTypes[idx] = type;
 			tanks[idx].setFluid(type != null ? new FluidStack(type, tanks[idx].getFluidAmount()) : null);
