@@ -197,8 +197,11 @@ public class FFPipeNetworkMk2 implements IFluidHandler {
 							pipes.put(te.getPos(), pipe);
 							for(EnumFacing e : EnumFacing.VALUES){
 								BlockPos pos = te.getPos().offset(e);
-								if(te.getWorld().isBlockLoaded(pos))
-									stack.push(te.getWorld().getTileEntity(pos));
+								if(te.getWorld().isBlockLoaded(pos)) {
+									TileEntity neighbor = te.getWorld().getTileEntity(pos);
+									//ArrayDeque rejects null elements (unlike the old recursion, which just returned on a null te)
+									if(neighbor != null) stack.push(neighbor);
+								}
 							}
 						}
 					} else if(pipe.getNetwork().type == type && pipe.getNetwork().pipeTier == tier && !networks.contains(pipe.getNetwork())) {
