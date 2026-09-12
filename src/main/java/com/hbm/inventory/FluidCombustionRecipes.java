@@ -14,18 +14,18 @@ public class FluidCombustionRecipes {
 	//for 1000 mb
 	public static void registerFluidCombustionRecipes() {
 		//oil and ethanol stay manual (kept as manual fluids); everything else via HbmFluid.applyAllFuels
-		addBurnableFluid(ModForgeFluids.oil, 10);
-		addBurnableFluid(ModForgeFluids.ethanol, 75);
+		addBurnableFluid(ModForgeFluids.oil, 25);
+		addBurnableFluid(ModForgeFluids.ethanol, 275);
 
 		addBurnableFluid("liquidhydrogen", 5);
 		addBurnableFluid("liquiddeuterium", 5);
 		addBurnableFluid("liquidtritium", 5);
-		addBurnableFluid("crude_oil", 10);
-		addBurnableFluid("oilgc", 10);
+		addBurnableFluid("crude_oil", 25);
+		addBurnableFluid("oilgc", 25);
 		addBurnableFluid("fuel", 120);
 		addBurnableFluid("refined_biofuel", 150);
 		addBurnableFluid("pyrotheum", 1_500);
-		addBurnableFluid("ethanol", 30);
+		addBurnableFluid("ethanol", 275);
 		addBurnableFluid("plantoil", 50);
 		addBurnableFluid("acetaldehyde", 80);
 		addBurnableFluid("biodiesel", 175);

@@ -96,7 +96,7 @@ public class ItemForgeFluidIdentifier extends Item implements IHasCustomModel {
 		if (f != null)
 			list.add("   " + f.getLocalizedName(new FluidStack(f, 1000)));
 		else
-			list.add("   " + I18nUtil.resolveKey("hbmfluid.none"));
+			list.add("   " + I18nUtil.resolveKey("fluid.none"));
 	}
 
 	@Override

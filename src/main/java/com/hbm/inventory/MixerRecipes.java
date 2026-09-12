@@ -1,6 +1,7 @@
 package com.hbm.inventory;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 import com.hbm.items.ModItems;
@@ -24,8 +25,30 @@ public class MixerRecipes {
 	public static LinkedHashMap<Fluid, Integer> recipesDurations = new LinkedHashMap();
 	public static HashMap<Fluid, AStack> recipesItemInputs = new HashMap();
 	
+	private static HashSet<String> blacklistedRecipes = new HashSet<>();
+	
+	static {
+		blacklistedRecipes.add("COOLANT");
+		blacklistedRecipes.add("CRYOGEL");
+		blacklistedRecipes.add("SULFURIC_ACID");
+		blacklistedRecipes.add("GASOLINE");
+		blacklistedRecipes.add("GASOLINE_HQ");
+		blacklistedRecipes.add("GAS_METHANE");
+		blacklistedRecipes.add("RAWGAS_PETROLEUM");
+		blacklistedRecipes.add("CHLOROMETHANE");
+		blacklistedRecipes.add("DICHLOROMETHANE");
+		blacklistedRecipes.add("CHLOROFORM");
+		blacklistedRecipes.add("TETRACHROMETHANE");
+		blacklistedRecipes.add("CHLORINE");
+	}
+	
 	public static void copyChemplantRecipes() {
 		for (int i: ChemplantRecipes.recipeNames.keySet()){
+			String recipeName = ChemplantRecipes.recipeNames.get(i);
+			if(blacklistedRecipes.contains(recipeName)) {
+				continue;
+			}
+			
 			FluidStack[] fStacks = ChemplantRecipes.recipeFluidOutputs.get(i);
 			if(!(fStacks != null && fStacks.length == 1)){
 				continue;
@@ -53,6 +76,10 @@ public class MixerRecipes {
 		addRecipe(new FluidStack(ModForgeFluids.nitroglycerin, 1000), new FluidStack[]{ new FluidStack(ModForgeFluids.petroleum, 1000), new FluidStack(ModForgeFluids.nitric_acid, 1000)}, null, 20);
 		addRecipe(new FluidStack(ModForgeFluids.biofuel, 250), new FluidStack[]{ new FluidStack(ModForgeFluids.fishoil, 500), new FluidStack(ModForgeFluids.sunfloweroil, 500)}, null, 20);
 		addRecipe(new FluidStack(ModForgeFluids.lubricant, 1000), new FluidStack[]{ new FluidStack(ModForgeFluids.ethanol, 200), new FluidStack(ModForgeFluids.sunfloweroil, 800)}, null, 20);
+		addRecipe(new FluidStack(ModForgeFluids.solvent, 300), new FluidStack[]{ new FluidStack(ModForgeFluids.dichloromethane, 900)}, null, 100);
+		addRecipe(new FluidStack(ModForgeFluids.solvent, 300), new FluidStack[]{ new FluidStack(ModForgeFluids.chloroform, 450)}, null, 100);
+		addRecipe(new FluidStack(ModForgeFluids.phosgene, 1000), new FluidStack[]{ new FluidStack(ModForgeFluids.chlorine, 500), new FluidStack(ModForgeFluids.unsaturateds, 500)}, null, 40);
+		addRecipe(new FluidStack(ModForgeFluids.sulfuric_acid, 500), new FluidStack[]{ new FluidStack(ModForgeFluids.acid, 800)}, new ComparableStack(ModItems.sulfur), 50);
 	}
 
 	public static void addRecipe(FluidStack output, FluidStack[] inputs, AStack inputItem, int duration){

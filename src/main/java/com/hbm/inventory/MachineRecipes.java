@@ -75,12 +75,6 @@ public class MachineRecipes {
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.sulfur), 3));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.sulfur), 4));
 			return list;
-		} else if(fluid == ModForgeFluids.coolant){
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.niter), 1));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.niter), 2));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.niter), 3));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.niter), 4));
-			return list;
 		} else if(fluid == ModForgeFluids.nitan){
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_nitan_mix), 1));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_nitan_mix), 2));
@@ -130,8 +124,6 @@ public class MachineRecipes {
 			return 8000;
 		else if(fluid == ModForgeFluids.sas3)
 			return 1000;
-		else if(fluid == ModForgeFluids.coolant)
-			return 8000;
 		else if(fluid == ModForgeFluids.nitan)
 			return 2000;
 		else if(fluid == ModForgeFluids.sparkfuel)

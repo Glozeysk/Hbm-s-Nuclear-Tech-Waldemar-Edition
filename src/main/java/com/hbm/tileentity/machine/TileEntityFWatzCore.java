@@ -72,7 +72,7 @@ public class TileEntityFWatzCore extends TileEntityMachineBase implements IContr
 		tanks = new FluidTank[3];
 		tankTypes = new Fluid[3];
 		tanks[0] = new FluidTank(128000);
-		tankTypes[0] = ModForgeFluids.coolant;
+		tankTypes[0] = ModForgeFluids.cryogel;
 		tanks[1] = new FluidTank(64000);
 		tankTypes[1] = ModForgeFluids.amat;
 		tanks[2] = new FluidTank(64000);
@@ -115,7 +115,7 @@ public class TileEntityFWatzCore extends TileEntityMachineBase implements IContr
         progress = compound.getInteger("progress");
 		power = compound.getLong("power");
 		isOn = compound.getBoolean("isOn");
-		tankTypes[0] = ModForgeFluids.coolant;
+		tankTypes[0] = ModForgeFluids.cryogel;
 		tankTypes[1] = ModForgeFluids.amat;
 		tankTypes[2] = ModForgeFluids.aschrab;
 		if(compound.hasKey("tanks"))

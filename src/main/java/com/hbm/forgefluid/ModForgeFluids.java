@@ -55,12 +55,12 @@ public class ModForgeFluids {
 			.props(0, 0, 4, EnumSymbol.NONE)
 			.build();
 	public static Fluid coolant = HbmFluid.builder("coolant")
-			.temperatureKelvin(203)
-			.props(1, 0, 0, EnumSymbol.NONE)
+			.temperatureKelvin(173)
+			.props(1, 0, 0, EnumSymbol.CROYGENIC)
 			.build();
 	public static Fluid hotcoolant = HbmFluid.builder("hotcoolant")
-			.temperature(400)
-			.props(1, 0, 4, EnumSymbol.NONE)
+			.temperature(200)
+			.props(4, 1, 1, EnumSymbol.NONE)
 			.build();
 
 	public static Fluid heavywater = HbmFluid.builder("heavywater")
@@ -83,60 +83,61 @@ public class ModForgeFluids {
 	public static Fluid hotoil = HbmFluid.builder("hotoil")
 			.temperature(350)
 			.props(2, 3, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 10)
 			.build();
 	public static Fluid crackoil = HbmFluid.builder("crackoil")
 			.props(2, 1, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 10)
+			.trait(FluidTrait.COMBUSTION_TU, 31.2)
 			.build();
 	public static Fluid crackoil_pure = HbmFluid.builder("crackoil_pure")
 			.props(2, 1, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 20)
+			.trait(FluidTrait.COMBUSTION_TU, 62.5)
 			.build();
 	public static Fluid hotcrackoil = HbmFluid.builder("hotcrackoil")
 			.temperature(350)
 			.props(2, 3, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 10)
 			.build();
 	public static Fluid hotcrackoil_pure = HbmFluid.builder("hotcrackoil_pure")
 			.temperature(350)
 			.props(2, 3, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 20)
 			.build();
 	public static Fluid heavyoil = HbmFluid.builder("heavyoil")
 			.props(2, 1, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 50)
-			.fuel(FuelGrade.LOW, 25_000)
+			.trait(FluidTrait.COMBUSTION_TU, 55)
+			.fuel(FuelGrade.LOW, 68_700)
 			.canister("canister_heavyoil")
 			.build();
 	public static Fluid bitumen = HbmFluid.builder("bitumen")
 			.props(2, 0, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 35)
 			.canister("canister_bitumen")
 			.build();
 	public static Fluid smear = HbmFluid.builder("smear")
 			.props(2, 1, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 50)
+			.trait(FluidTrait.COMBUSTION_TU, 82.5)
 			.canister("canister_smear")
 			.build();
 	public static Fluid heatingoil = HbmFluid.builder("heatingoil")
 			.props(2, 2, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 150)
-			.fuel(FuelGrade.LOW, 100_000)
+			.trait(FluidTrait.COMBUSTION_TU, 391)
+			.fuel(FuelGrade.LOW, 489_000)
 			.canister("canister_heatingoil")
 			.build();
 
 	public static Fluid reclaimed = HbmFluid.builder("reclaimed")
 			.props(2, 2, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 100)
-			.fuel(FuelGrade.LOW, 200_000)
+			.trait(FluidTrait.COMBUSTION_TU, 113)
+			.fuel(FuelGrade.LOW, 141_000)
 			.canister("canister_reoil")
 			.build();
 	public static Fluid petroil = HbmFluid.builder("petroil")
 			.props(1, 3, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 125)
-			.fuel(FuelGrade.MEDIUM, 300_000)
+			.trait(FluidTrait.COMBUSTION_TU, 130)
+			.fuel(FuelGrade.MEDIUM, 195_000)
 			.canister("canister_petroil")
+			.build();
+	public static Fluid petroil_hq = HbmFluid.builder("petroil_hq")
+			.props(1, 2, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 605)
+			.fuel(FuelGrade.HIGH, 1_510_000)
 			.build();
 
 	public static Fluid fracksol = HbmFluid.builder("fracksol")
@@ -146,93 +147,113 @@ public class ModForgeFluids {
 	//Drillgon200: Bruh I spelled this wrong, too.
 	public static Fluid lubricant = HbmFluid.builder("lubricant")
 			.props(2, 1, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 20)
 			.canister("canister_canola")
 			.build();
 
 	public static Fluid naphtha = HbmFluid.builder("naphtha")
 			.props(2, 1, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 125)
-			.fuel(FuelGrade.MEDIUM, 200_000)
+			.trait(FluidTrait.COMBUSTION_TU, 110)
+			.fuel(FuelGrade.MEDIUM, 165_000)
 			.canister("canister_naphtha")
 			.build();
 	public static Fluid naphtha_pure = HbmFluid.builder("naphtha_pure")
 			.props(2, 1, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 250)
-			.fuel(FuelGrade.MEDIUM, 400_000)
+			.trait(FluidTrait.COMBUSTION_TU, 220)
+			.fuel(FuelGrade.MEDIUM, 330_000)
 			.build();
 	public static Fluid diesel = HbmFluid.builder("diesel")
 			.props(1, 2, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 200)
-			.fuel(FuelGrade.HIGH, 500_000)
+			.trait(FluidTrait.COMBUSTION_TU, 550)
+			.fuel(FuelGrade.HIGH, 1_370_000)
 			.canister("canister_fuel")
+			.build();
+	public static Fluid diesel_hq = HbmFluid.builder("diesel_hq")
+			.props(1, 2, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 1_370)
+			.fuel(FuelGrade.HIGH, 3_430_000)
 			.build();
 
 	public static Fluid lightoil = HbmFluid.builder("lightoil")
 			.props(1, 2, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 200)
-			.fuel(FuelGrade.MEDIUM, 500_000)
+			.trait(FluidTrait.COMBUSTION_TU, 1_460)
+			.fuel(FuelGrade.MEDIUM, 2_200_000)
 			.canister("canister_lightoil")
 			.build();
 	public static Fluid lightoil_pure = HbmFluid.builder("lightoil_pure")
 			.props(1, 2, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 400)
-			.fuel(FuelGrade.MEDIUM, 1_000_000)
+			.trait(FluidTrait.COMBUSTION_TU, 2_930)
+			.fuel(FuelGrade.MEDIUM, 4_400_000)
 			.build();
 	public static Fluid kerosene = HbmFluid.builder("kerosene")
 			.props(1, 2, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 300)
-			.fuel(FuelGrade.AERO, 1_250_000)
+			.trait(FluidTrait.COMBUSTION_TU, 2_560)
+			.fuel(FuelGrade.AERO, 3_850_000)
 			.canister("canister_kerosene")
+			.build();
+	public static Fluid kerosene_hq = HbmFluid.builder("kerosene_hq")
+			.props(1, 2, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 6_400)
+			.fuel(FuelGrade.AERO, 9_600_000)
 			.build();
 
 	public static Fluid gas = HbmFluid.builder("gas")
 			.temperatureKelvin(111)
 			.props(1, 4, 1, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 10)
-			.fuel(FuelGrade.GAS, 350_000)
+			.trait(FluidTrait.COMBUSTION_TU, 2_000)
+			.fuel(FuelGrade.GAS, 3_000_000)
 			.gasCanister("gas_full")
 			.build();
 	public static Fluid petroleum = HbmFluid.builder("petroleum")
 			.props(1, 4, 1, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 25)
-			.fuel(FuelGrade.GAS, 300_000)
+			.trait(FluidTrait.COMBUSTION_TU, 1_650)
+			.fuel(FuelGrade.GAS, 2_470_000)
 			.gasCanister("gas_petroleum")
+			.build();
+	public static Fluid petroleum_raw = HbmFluid.builder("petroleum_raw")
+			.props(1, 4, 1, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 650)
+			.fuel(FuelGrade.GAS, 1_000_000)
+			.build();
+	public static Fluid methane = HbmFluid.builder("methane")
+			.props(1, 4, 1, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 3_000)
+			.fuel(FuelGrade.GAS, 4_500_000)
 			.build();
 
 	public static Fluid aromatics = HbmFluid.builder("aromatics")
 			.props(1, 4, 1, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 25)
-			.fuel(FuelGrade.GAS, 150_000)
+			.trait(FluidTrait.COMBUSTION_TU, 5_450)
 			.build();
 	public static Fluid unsaturateds = HbmFluid.builder("unsaturateds")
 			.props(1, 4, 1, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 1_000)
-			.fuel(FuelGrade.GAS, 250_000)
+			.trait(FluidTrait.COMBUSTION_TU, 3_660)
 			.build();
 	
 	public static Fluid biogas = HbmFluid.builder("biogas")
 			.props(1, 4, 1, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 25)
-			.fuel(FuelGrade.GAS, 500_000)
+			.trait(FluidTrait.COMBUSTION_TU, 62.5)
+			.fuel(FuelGrade.GAS, 78_100)
 			.gasCanister("gas_biogas")
 			.build();
 	public static Fluid biofuel = HbmFluid.builder("biofuel")
 			.props(1, 2, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 150)
+			.trait(FluidTrait.COMBUSTION_TU, 500)
 			.fuel(FuelGrade.AERO, 1_250_000)
 			.canister("canister_biofuel")
+			.build();
+	public static Fluid xylene = HbmFluid.builder("xylene")
+			.props(2, 3, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 3_150)
+			.fuel(FuelGrade.HIGH, 7_870_000)
 			.build();
 
 	public static Fluid ethanol = new Fluid("ethanol", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/ethanol_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/ethanol_flowing"), null, Color.WHITE);
 	public static Fluid fishoil = HbmFluid.builder("fishoil")
 			.props(0, 1, 0, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 15)
-			.fuel(FuelGrade.LOW, 50_000)
+			.trait(FluidTrait.COMBUSTION_TU, 75)
 			.build();
 	public static Fluid sunfloweroil = HbmFluid.builder("sunfloweroil")
 			.props(0, 1, 0, EnumSymbol.NONE)
-			.fuel(FuelGrade.LOW, 80_000)
 			.build();
 	public static Fluid colloid = HbmFluid.builder("colloid")
 			.props(0, 0, 0, EnumSymbol.NONE)
@@ -240,15 +261,33 @@ public class ModForgeFluids {
 
 	public static Fluid nitan = HbmFluid.builder("nitan")
 			.props(2, 4, 1, EnumSymbol.NONE).dfc(1.6F)
-			.trait(FluidTrait.COMBUSTION_TU, 2_000)
-			.fuel(FuelGrade.HIGH, 5_000_000)
+			.trait(FluidTrait.COMBUSTION_TU, 32_000)
+			.fuel(FuelGrade.HIGH, 80_000_000)
 			.canister("canister_superfuel")
 			.build();
 	public static Fluid sparkfuel = HbmFluid.builder("sparkfuel")
 			.temperature(20000)
-			.props(5, 5, 5, EnumSymbol.RADIATION).dfc(2.5F).trait(FluidTrait.CORROSIVE)
-			.trait(FluidTrait.COMBUSTION_TU, 25_000)
-			.fuel(FuelGrade.HIGH, 10_000_000)
+			.props(5, 5, 5, EnumSymbol.RADIATION).dfc(2.5F).trait(FluidTrait.CORROSIVE_2)
+			.trait(FluidTrait.COMBUSTION_TU, 256_000)
+			.fuel(FuelGrade.HIGH, 640_000_000)
+			.build();
+	public static Fluid chlorine = HbmFluid.builder("chlorine")
+			.props(3, 0, 0, EnumSymbol.OXIDIZER).trait(FluidTrait.CORROSIVE_2)
+			.build();
+	public static Fluid chloromethane = HbmFluid.builder("chloromethane")
+			.props(2, 4, 0, EnumSymbol.NONE)
+			.build();
+	public static Fluid dichloromethane = HbmFluid.builder("dichloromethane")
+			.props(2, 1, 0, EnumSymbol.NONE).trait(FluidTrait.CORROSIVE)
+			.build();
+	public static Fluid chloroform = HbmFluid.builder("chloroform")
+			.props(2, 0, 0, EnumSymbol.NONE).trait(FluidTrait.CORROSIVE)
+			.build();
+	public static Fluid tetrachromethane = HbmFluid.builder("tetrachromethane")
+			.props(3, 0, 0, EnumSymbol.NONE).trait(FluidTrait.CORROSIVE_2)
+			.build();
+	public static Fluid phosgene = HbmFluid.builder("phosgene")
+			.props(4, 0, 1, EnumSymbol.OXIDIZER).trait(FluidTrait.CORROSIVE)
 			.build();
 
 	public static Fluid uf6 = HbmFluid.builder("uf6")
@@ -291,10 +330,13 @@ public class ModForgeFluids {
 	public static Fluid nitroglycerin = HbmFluid.builder("nitroglycerin")
 			.props(0, 4, 4, EnumSymbol.NONE).dfc(1.5F)
 			.build();
+	public static Fluid iongel = HbmFluid.builder("iongel")
+			.props(1, 0, 4, EnumSymbol.NONE)
+			.build();
 
 	public static Fluid sourgas = HbmFluid.builder("sourgas")
 			.props(4, 4, 0, EnumSymbol.ACID).trait(FluidTrait.CORROSIVE)
-			.trait(FluidTrait.COMBUSTION_TU, 100)
+			.trait(FluidTrait.COMBUSTION_TU, 250)
 			.build();
 
 	public static Fluid liquid_osmiridium = HbmFluid.builder("liquid_osmiridium")
@@ -306,7 +348,7 @@ public class ModForgeFluids {
 			.props(4, 0, 3, EnumSymbol.OXIDIZER).dfc(1.5F).trait(FluidTrait.CORROSIVE_2)
 			.build();
 	public static Fluid cryogel = HbmFluid.builder("cryogel")
-			.temperatureKelvin(50)
+			.temperatureKelvin(113)
 			.props(2, 0, 0, EnumSymbol.CROYGENIC)
 			.build();
 
@@ -329,8 +371,8 @@ public class ModForgeFluids {
 	public static Fluid balefire = HbmFluid.builder("balefire")
 			.temperature(15000)
 			.props(4, 4, 5, EnumSymbol.RADIATION).dfc(2.4F).trait(FluidTrait.CORROSIVE)
-			.trait(FluidTrait.COMBUSTION_TU, 10_000)
-			.fuel(FuelGrade.HIGH, 2_500_000)
+			.trait(FluidTrait.COMBUSTION_TU, 128_000)
+			.fuel(FuelGrade.HIGH, 320_000_000)
 			.cell("cell_balefire")
 			.build();
 
@@ -373,7 +415,7 @@ public class ModForgeFluids {
 			.textures("blocks/forgefluid/uu_still", "blocks/forgefluid/uu_flowing")
 			.temperature(1000000)
 			.props(6, 2, 6, EnumSymbol.ACID).dfc(2.0F).trait(FluidTrait.CORROSIVE)
-			.trait(FluidTrait.COMBUSTION_TU, 50_000)
+			.trait(FluidTrait.COMBUSTION_TU, 5_000_000)
 			.build();
 
 	public static Fluid pain = HbmFluid.builder("pain")
@@ -386,10 +428,15 @@ public class ModForgeFluids {
 			.props(2, 0, 1, EnumSymbol.RADIATION)
 			.build();
 	public static Fluid gasoline = HbmFluid.builder("gasoline")
-			.props(2, 0, 1, EnumSymbol.NONE)
-			.trait(FluidTrait.COMBUSTION_TU, 800)
-			.fuel(FuelGrade.MEDIUM, 800_000)
+			.props(1, 3, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 195)
+			.fuel(FuelGrade.MEDIUM, 293_000)
 			.canister("canister_gasoline")
+			.build();
+	public static Fluid gasoline_hq = HbmFluid.builder("gasoline_hq")
+			.props(1, 2, 0, EnumSymbol.NONE)
+			.trait(FluidTrait.COMBUSTION_TU, 907)
+			.fuel(FuelGrade.HIGH, 2_260_000)
 			.build();
 	public static Fluid experience = HbmFluid.builder("experience")
 			.props(0, 0, 0, EnumSymbol.NONE).dfc(1.1F)

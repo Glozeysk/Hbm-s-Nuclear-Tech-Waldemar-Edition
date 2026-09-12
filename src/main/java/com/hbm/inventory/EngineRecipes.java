@@ -14,10 +14,10 @@ public class EngineRecipes {
 	//for 1000 mb
 	public static void registerEngineRecipes() {
 		//ethanol stays manual; everything else via HbmFluid.applyAllFuels
-		addFuel(ModForgeFluids.ethanol, FuelGrade.HIGH, 200_000);
+		addFuel(ModForgeFluids.ethanol, FuelGrade.LOW, 687_000);
 
 		//Compat
-		addFuel("petroil", FuelGrade.MEDIUM, 300_000); //galacticraft
+		addFuel("petroil", FuelGrade.MEDIUM, 200_000); //galacticraft
 		addFuel("refined_fuel", FuelGrade.HIGH, 1_000_000); //thermalfoundation
 		addFuel("refined_biofuel", FuelGrade.HIGH, 400_000); //thermalfoundation
 	

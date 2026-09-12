@@ -44,8 +44,8 @@ public class RefineryRecipes {
 			new ItemStack(ModItems.oil_tar, 1)));
 
 		refineryRecipesMap.put(ModForgeFluids.hotcrackoil_pure, new Pair(new FluidStack[]{ 
-			new FluidStack(ModForgeFluids.naphtha_pure, 40), 
-			new FluidStack(ModForgeFluids.lightoil_pure, 30),
+			new FluidStack(ModForgeFluids.naphtha_pure, 30), 
+			new FluidStack(ModForgeFluids.lightoil_pure, 40),
 			new FluidStack(ModForgeFluids.aromatics, 15),
 			new FluidStack(ModForgeFluids.unsaturateds, 15)	}, 
 			new ItemStack(ModItems.oil_tar, 1)));
@@ -62,6 +62,8 @@ public class RefineryRecipes {
 		fractions.put(ModForgeFluids.smear, new Quartet<>(ModForgeFluids.heatingoil, ModForgeFluids.lubricant, smear_frac_heat, smear_frac_lube));
 		fractions.put(ModForgeFluids.naphtha, new Quartet<>(ModForgeFluids.heatingoil, ModForgeFluids.petroil, napht_frac_heat, napht_frac_diesel));
 		fractions.put(ModForgeFluids.lightoil, new Quartet<>(ModForgeFluids.diesel, ModForgeFluids.kerosene, light_frac_diesel, light_frac_kero));
+		fractions.put(ModForgeFluids.naphtha_pure, new Quartet<>(ModForgeFluids.xylene, ModForgeFluids.petroil_hq, napht_frac_heat, napht_frac_diesel));
+		fractions.put(ModForgeFluids.lightoil_pure, new Quartet<>(ModForgeFluids.diesel_hq, ModForgeFluids.kerosene_hq, light_frac_diesel, light_frac_kero));
 	}
 	
 	public static Quartet<Fluid, Fluid, Integer, Integer> getFractions(Fluid oil) {
