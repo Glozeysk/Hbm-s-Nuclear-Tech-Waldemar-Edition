@@ -2944,6 +2944,7 @@ item.oil_detector.detectedBedrock=Bedrock Oil detected nearby
 item.oil_detector.name=Oil Reservoir Detector
 item.oil_detector.noOil=No Oil detected
 item.oil_tar.name=Oil Tar
+item.oil_tar_chlorine.name=Chlorinated Oil Tar
 item.ore_bedrock.name=%s Bedrock Ore
 item.ore_bedrock_centrifuged.name=Centrifuged %s Ore
 item.ore_bedrock_cleaned.name=Cleaned %s Ore

@@ -2993,6 +2993,7 @@ item.oil_detector.detectedBedrock=Бедроковая нефть обнаруж
 item.oil_detector.name=Детектор нефтяного резервуара
 item.oil_detector.noOil=Нефти не обнаружено.
 item.oil_tar.name=Нефтяная смола
+item.oil_tar_chlorine.name=Хлорированная нефтяная смола
 item.ore_bedrock.name=%s бедроковая руда
 item.ore_bedrock_centrifuged.name=%s центрифугированная руда
 item.ore_bedrock_cleaned.name=%s очищенная руда
